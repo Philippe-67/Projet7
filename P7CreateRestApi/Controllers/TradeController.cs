@@ -1,9 +1,9 @@
-using Dot.Net.WebApi.Domain;
+using P7CreateRestApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dot.Net.WebApi.Controllers
+namespace P7CreateRestApi.Controllers
 {
-    [ApiController]
+    [ApiController] 
     [Route("[controller]")]
     public class TradeController : ControllerBase
     {
