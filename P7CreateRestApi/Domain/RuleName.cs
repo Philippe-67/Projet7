@@ -2,6 +2,10 @@ namespace P7CreateRestApi.Domain
 {
     public class RuleName
     {
-        // TODO: Map columns in data table RULENAME with corresponding fields
+        public int Id { get; set; }
+        public string MoodysRating { get; set; }
+        public string SandPRating { get; set; }
+        public string FitchRating { get; set; }
+        public byte? OrderNumber { get; set; }
     }
 }
