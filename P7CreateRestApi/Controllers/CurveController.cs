@@ -1,58 +1,62 @@
-using P7CreateRestApi.Domain;
+
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Domain;
+using P7CreateRestApi.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace P7CreateRestApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CurveController : ControllerBase
+    public class CurvePointController : ControllerBase
     {
-        // TODO: Inject Curve Point service
+        private readonly ICurvePointRepository _curvePointRepository;
 
-        [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        public CurvePointController(ICurvePointRepository curvePointRepository)
         {
-            return Ok();
+            _curvePointRepository = curvePointRepository;
         }
 
         [HttpGet]
-        [Route("add")]
-        public IActionResult AddCurvePoint([FromBody]CurvePoint curvePoint)
+        public async Task<IActionResult> Get()
         {
-            return Ok();
+            var curvePoints = await _curvePointRepository.GetAllAsync();
+            return Ok(curvePoints);
         }
 
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]CurvePoint curvePoint)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return Ok();
-        }
+            var curvePoint = await _curvePointRepository.GetByIdAsync(id);
+            if (curvePoint == null)
+                return NotFound();
 
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get CurvePoint by Id and to model then show to the form
-            return Ok();
+            return Ok(curvePoint);
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateCurvePoint(int id, [FromBody] CurvePoint curvePoint)
+        public async Task<IActionResult> Post([FromBody] CurvePoint curvePoint)
         {
-            // TODO: check required fields, if valid call service to update Curve and return Curve list
-            return Ok();
+            await _curvePointRepository.AddAsync(curvePoint);
+            return CreatedAtAction(nameof(Get), new { id = curvePoint.Id }, curvePoint);
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteBid(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] CurvePoint curvePoint)
         {
-            // TODO: Find Curve by Id and delete the Curve, return to Curve list
-            return Ok();
+            if (id != curvePoint.Id)
+                return BadRequest();
+
+            await _curvePointRepository.UpdateAsync(curvePoint);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _curvePointRepository.DeleteAsync(id);
+            return NoContent();
         }
     }
 }
