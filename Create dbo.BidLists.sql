@@ -1,0 +1,7 @@
+﻿INSERT INTO BidLists (Account, BidType, BidQuantity, AskQuantity, Bidamount, Ask, Benchmark, BidListDate, Commentary, BidSecurity, BidStatus, Trader, Book, CreationName, CreationDate, RevisionName, RevisionDate, DealName, DealType, SourceListId, Side)
+VALUES
+('Account1', 'Type1', 100, 50, 1500.50, 1600.75, 'Benchmark1', '2023-10-01', 'Comment1', 'Security1', 'Status1', 'Trader1', 'Book1', 'Creator1', '2023-10-01', 'Revisor1', '2023-10-02', 'Deal1', 'TypeA', 'SourceListId1', 'Buy'),
+('Account2', 'Type2', 200, 75, 2200.75, 2300.50, 'Benchmark2', '2023-10-02', 'Comment2', 'Security2', 'Status2', 'Trader2', 'Book2', 'Creator2', '2023-10-02', 'Revisor2', '2023-10-03', 'Deal2', 'TypeB', 'SourceListId2', 'Sell'),
+('Account3', 'Type3', 150, 60, 1800.25, 1950.25, 'Benchmark3', '2023-10-03', 'Comment3', 'Security3', 'Status3', 'Trader3', 'Book3', 'Creator3', '2023-10-03', 'Revisor3', '2023-10-04', 'Deal3', 'TypeC', 'SourceListId3', 'Buy'),
+('Account4', 'Type4', 120, 45, 1600.00, 1750.50, 'Benchmark4', '2023-10-04', 'Comment4', 'Security4', 'Status4', 'Trader4', 'Book4', 'Creator4', '2023-10-04', 'Revisor4', '2023-10-05', 'Deal4', 'TypeD', 'SourceListId4', 'Sell'),
+('Account5', 'Type5', 180, 80, 2400.75, 2550.00, 'Benchmark5', '2023-10-05', 'Comment5', 'Security5', 'Status5', 'Trader5', 'Book5', 'Creator5', '2023-10-05', 'Revisor5', '2023-10-06', 'Deal5', 'TypeE', 'SourceListId5', 'Buy');
