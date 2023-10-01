@@ -15,6 +15,7 @@ builder.Services.AddDbContext<LocalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IBidListRepository, BidListRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 
 var app = builder.Build();
