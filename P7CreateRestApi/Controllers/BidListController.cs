@@ -1,5 +1,6 @@
 using P7CreateRestApi.Domain;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -7,34 +8,55 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class BidListController : ControllerBase
     {
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody] BidList bidList)
+        private readonly IBidListRepository _bidListRepository;
+
+        public BidListController(IBidListRepository bidListRepository)
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return Ok();
+            _bidListRepository = bidListRepository;
         }
 
         [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        public async Task<IActionResult> Get()
         {
-            return Ok();
+            var bidLists = await _bidListRepository.GetAllAsync();
+            return Ok(bidLists);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var bidList = await _bidListRepository.GetByIdAsync(id);
+            if (bidList == null)
+                return NotFound();
+
+            return Ok(bidList);
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateBid(int id, [FromBody] BidList bidList)
+        public async Task<IActionResult> Post([FromBody] BidList bidList)
         {
-            // TODO: check required fields, if valid call service to update Bid and return list Bid
-            return Ok();
+            await _bidListRepository.AddAsync(bidList);
+            return CreatedAtAction(nameof(Get), new { id = bidList.BidListId }, bidList);
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteBid(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] BidList bidList)
         {
-            return Ok();
+            if (id != bidList.BidListId)
+                return BadRequest();
+
+            await _bidListRepository.UpdateAsync(bidList);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _bidListRepository.DeleteAsync(id);
+            return NoContent();
         }
     }
+
+
+
 }

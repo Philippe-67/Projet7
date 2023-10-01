@@ -1,10 +1,10 @@
     using P7CreateRestApi.Data;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -13,6 +13,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LocalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IBidListRepository, BidListRepository>();
+
 
 var app = builder.Build();
 
