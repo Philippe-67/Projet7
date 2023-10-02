@@ -75,12 +75,12 @@ namespace P7CreateRestApi.Controllers
             _tradeRepository = tradeRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var trades = await _tradeRepository.GetAllAsync();
-            return Ok(trades);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var trades = await _tradeRepository.GetAllAsync();
+        //    return Ok(trades);
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

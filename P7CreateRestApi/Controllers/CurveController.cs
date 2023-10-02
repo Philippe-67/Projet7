@@ -18,12 +18,12 @@ namespace P7CreateRestApi.Controllers
             _curvePointRepository = curvePointRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var curvePoints = await _curvePointRepository.GetAllAsync();
-            return Ok(curvePoints);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var curvePoints = await _curvePointRepository.GetAllAsync();
+        //    return Ok(curvePoints);
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

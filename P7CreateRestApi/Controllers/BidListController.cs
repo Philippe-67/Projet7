@@ -15,12 +15,12 @@ namespace Dot.Net.WebApi.Controllers
             _bidListRepository = bidListRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var bidLists = await _bidListRepository.GetAllAsync();
-            return Ok(bidLists);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var bidLists = await _bidListRepository.GetAllAsync();
+        //    return Ok(bidLists);
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

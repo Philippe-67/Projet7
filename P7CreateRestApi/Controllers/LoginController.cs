@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using P7CreateRestApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace P7CreateRestApi.Controllers
 {
+    using global::P7CreateRestApi.Models.Authentication.Login;
     //    [ApiController]
     //    [Route("[controller]")]
     //    public class LoginController : ControllerBase
@@ -86,7 +86,7 @@ namespace P7CreateRestApi.Controllers
     //}
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-   // using P7CreateRestApi.Models;
+    // using P7CreateRestApi.Models;
     using System.Threading.Tasks;
 
     namespace P7CreateRestApi.Controllers
@@ -107,7 +107,7 @@ namespace P7CreateRestApi.Controllers
             [HttpPost("login")]
             public async Task<IActionResult> Login([FromBody] LoginModel model)
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
+                var user = await _userManager.FindByNameAsync(model.Username);
 
                 if (user != null)
                 {

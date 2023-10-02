@@ -100,13 +100,13 @@ namespace P7CreateRestApi.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
-        [Route("list")]
-        public async Task<IActionResult> Home()
-        {
-            var users = await _userRepository.GetAllUsersAsync();
-            return Ok(users);
-        }
+        //[HttpGet]
+        //[Route("list")]
+        //public async Task<IActionResult> Home()
+        //{
+        //    var users = await _userRepository.GetAllUsersAsync();
+        //    return Ok(users);
+        //}
 
         [HttpPost]
         [Route("add")]

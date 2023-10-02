@@ -16,14 +16,14 @@ namespace P7CreateRestApi.Controllers
         }
         // TODO: Inject Rating service
 
-        [HttpGet]
-       // [Route("list")]
-        public async Task<IActionResult> Get()
-        {
-            var ratings = await _ratingRepository.GetAllAsync();
-            // TODO: find all Rating, add to model
-            return Ok(ratings);
-        }
+       // [HttpGet]
+       //// [Route("list")]
+       // public async Task<IActionResult> Get()
+       // {
+       //     var ratings = await _ratingRepository.GetAllAsync();
+       //     // TODO: find all Rating, add to model
+       //     return Ok(ratings);
+       // }
 
         [HttpGet("{id}")]
 

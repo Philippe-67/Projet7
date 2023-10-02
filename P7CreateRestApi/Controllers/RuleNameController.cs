@@ -76,12 +76,12 @@ using System.Threading.Tasks;
             _ruleNameRepository = ruleNameRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var ruleNames = await _ruleNameRepository.GetAllAsync();
-            return Ok(ruleNames);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var ruleNames = await _ruleNameRepository.GetAllAsync();
+        //    return Ok(ruleNames);
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
