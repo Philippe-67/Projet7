@@ -61,6 +61,7 @@ using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace P7CreateRestApi.Controllers
 {
@@ -83,6 +84,7 @@ namespace P7CreateRestApi.Controllers
         //}
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, RH, User")]
         public async Task<IActionResult> Get(int id)
         {
             var trade = await _tradeRepository.GetByIdAsync(id);
@@ -100,6 +102,7 @@ namespace P7CreateRestApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, RH")]
         public async Task<IActionResult> Put(int id, [FromBody] Trade trade)
         {
             if (id != trade.TradeId)
@@ -110,6 +113,7 @@ namespace P7CreateRestApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, RH")]
         public async Task<IActionResult> Delete(int id)
         {
             await _tradeRepository.DeleteAsync(id);

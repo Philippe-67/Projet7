@@ -1,6 +1,7 @@
 using P7CreateRestApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -23,6 +24,7 @@ namespace Dot.Net.WebApi.Controllers
         //}
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, RH, User")]
         public async Task<IActionResult> Get(int id)
         {
             var bidList = await _bidListRepository.GetByIdAsync(id);
@@ -33,6 +35,7 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, RH")]
         public async Task<IActionResult> Post([FromBody] BidList bidList)
         {
             await _bidListRepository.AddAsync(bidList);
@@ -40,6 +43,7 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, RH")]
         public async Task<IActionResult> Put(int id, [FromBody] BidList bidList)
         {
             if (id != bidList.BidListId)
@@ -50,6 +54,7 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, RH")]
         public async Task<IActionResult> Delete(int id)
         {
             await _bidListRepository.DeleteAsync(id);

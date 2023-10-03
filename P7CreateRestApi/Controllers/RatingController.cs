@@ -1,6 +1,7 @@
 using P7CreateRestApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace P7CreateRestApi.Controllers
 {
@@ -26,6 +27,7 @@ namespace P7CreateRestApi.Controllers
        // }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, RH, User")]
 
         public async Task<IActionResult> Get(int id)
         {
@@ -36,6 +38,7 @@ namespace P7CreateRestApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, RH")]
         //[Route("validate")]
         public async Task<IActionResult> Post([FromBody] Rating rating)
         {
@@ -47,6 +50,7 @@ namespace P7CreateRestApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, RH")]
         // [Route("update/{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Rating rating)
         {
@@ -57,7 +61,8 @@ namespace P7CreateRestApi.Controllers
         }
 
         [HttpDelete("{id}")]
-       // [Route("Delete/{id}")]
+        [Authorize(Roles = "Admin, RH")]
+        // [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _ratingRepository.DeleteAsync(id);
