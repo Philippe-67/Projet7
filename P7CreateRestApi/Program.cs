@@ -1,25 +1,34 @@
-    using P7CreateRestApi.Data;
+
+using P7CreateRestApi.Data;
 using Microsoft.EntityFrameworkCore;
 using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/// mise en place configuration pour Entity Framework
-ConfigurationManager configuration = builder.Configuration;
+// Configuration des logs
+var configuration = builder.Configuration;
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+    .WriteTo.Console()
+    .CreateLogger();
+
+// Configuration de la base de données
 builder.Services.AddDbContext<LocalDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-/// mise en place configuration pour Identity               
+// Configuration pour Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<LocalDbContext>()
     .AddDefaultTokenProviders();
 
-/// mise en place configuration pour l'authentication
+// Configuration pour l'authentification
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,8 +46,9 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = configuration["JWT:ValidIssuer"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
-
 });
+
+// Configuration des politiques d'autorisation
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
@@ -46,8 +56,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
 });
 
+// Configuration des contrôleurs
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Configuration de Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
@@ -55,7 +67,7 @@ builder.Services.AddSwaggerGen(option =>
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Description = "Please enter a valid Token",
+        Description = "Veuillez saisir un jeton valide",
         Name = "Authorization",
         Type = SecuritySchemeType.Http,
         BearerFormat = "JWT",
@@ -67,24 +79,24 @@ builder.Services.AddSwaggerGen(option =>
             new OpenApiSecurityScheme
             {
                 Reference=new OpenApiReference
-            {
-                Type=ReferenceType.SecurityScheme,
-                Id="Bearer"
-            }
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
             },
-        new List<string>()
-       } 
+            new List<string>()
+        }
     });
 });
 
-
+// Configuration des services
 builder.Services.AddScoped<IBidListRepository, BidListRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuration du pipeline de requête HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -95,6 +107,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Mappage des contrôleurs
 app.MapControllers();
 
+// Exécution de l'application
 app.Run();
