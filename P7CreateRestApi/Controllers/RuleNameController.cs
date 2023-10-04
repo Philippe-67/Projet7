@@ -16,7 +16,7 @@ public class RuleNameController : ControllerBase
         _ruleNameRepository = ruleNameRepository;
     }
 
-  
+
 
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin, RH, User")]

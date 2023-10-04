@@ -1,6 +1,4 @@
-﻿using P7CreateRestApi.Domain;
-
-namespace P7CreateRestApi.Repositories
+﻿namespace P7CreateRestApi.Repositories
 
 
 {

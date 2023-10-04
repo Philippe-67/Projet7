@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace P7CreateRestApi.Controllers
 {

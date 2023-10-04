@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace P7CreateRestApi.Domain    
+namespace P7CreateRestApi.Domain
 {
     public class RuleName
     {
@@ -18,6 +18,6 @@ namespace P7CreateRestApi.Domain
         [Required(ErrorMessage = "SQL Partition is required.")]
         public string SqlPart { get; set; }
 
-       
+
     }
 }

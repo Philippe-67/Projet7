@@ -1,7 +1,7 @@
-using P7CreateRestApi.Domain;
-using Microsoft.AspNetCore.Mvc;
-using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Domain;
+using P7CreateRestApi.Repositories;
 
 namespace P7CreateRestApi.Controllers
 {
@@ -9,22 +9,13 @@ namespace P7CreateRestApi.Controllers
     [Route("[controller]")]
     public class RatingController : ControllerBase
     {
-        
-            private readonly IRatingRepository _ratingRepository;
+
+        private readonly IRatingRepository _ratingRepository;
         public RatingController(IRatingRepository ratingRepository)
         {
             _ratingRepository = ratingRepository;
         }
-        // TODO: Inject Rating service
-
-       // [HttpGet]
-       //// [Route("list")]
-       // public async Task<IActionResult> Get()
-       // {
-       //     var ratings = await _ratingRepository.GetAllAsync();
-       //     // TODO: find all Rating, add to model
-       //     return Ok(ratings);
-       // }
+       
 
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin, RH, User")]
@@ -69,6 +60,6 @@ namespace P7CreateRestApi.Controllers
             return NoContent();
         }
 
-       
+
     }
 }

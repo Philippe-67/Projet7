@@ -1,15 +1,13 @@
 
-using P7CreateRestApi.Data;
-using Microsoft.EntityFrameworkCore;
-using P7CreateRestApi.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
 using Microsoft.OpenApi.Models;
+using P7CreateRestApi.Data;
+using P7CreateRestApi.Repositories;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

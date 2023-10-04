@@ -1,7 +1,7 @@
 
+using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
-using Microsoft.AspNetCore.Mvc;
 
 namespace P7CreateRestApi.Controllers
 {

@@ -1,7 +1,7 @@
-using P7CreateRestApi.Domain;
-using Microsoft.AspNetCore.Mvc;
-using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Domain;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -16,12 +16,7 @@ namespace Dot.Net.WebApi.Controllers
             _bidListRepository = bidListRepository;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var bidLists = await _bidListRepository.GetAllAsync();
-        //    return Ok(bidLists);
-        //}
+
 
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin, RH, User")]

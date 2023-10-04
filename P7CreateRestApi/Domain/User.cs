@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Net;
 
 namespace P7CreateRestApi.Domain
 {
@@ -20,4 +19,3 @@ namespace P7CreateRestApi.Domain
         public string Role { get; set; }
     }
 }
-    
