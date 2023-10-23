@@ -5,11 +5,11 @@ using P7CreateRestApi.Domain;
 
 namespace P7CreateRestApi.Repositories
 {
-    public class CurvePointRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly LocalDbContext _context;
 
-        public CurvePointRepository(LocalDbContext context)
+        public UserRepository(LocalDbContext context)
         {
             _context = context;
         }
