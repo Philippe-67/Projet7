@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
+using Microsoft.Extensions.Logging;
+
 
 namespace P7CreateRestApi.Controllers
 {
@@ -10,6 +12,15 @@ namespace P7CreateRestApi.Controllers
     public class UserController : ControllerBase
     {
         private IUserRepository _userRepository;
+        private readonly ILogger<UserController> _logger;
+
+        public UserController(ILogger<UserController> logger)
+        {
+            _logger = logger;
+        }
+
+
+     
 
         public UserController(IUserRepository userRepository)
         {
@@ -70,6 +81,8 @@ namespace P7CreateRestApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
+            _logger.LogInformation($"Deleting user with ID: {id}");
+
             await _userRepository.DeleteUserAsync(id);
             return Ok();
         }

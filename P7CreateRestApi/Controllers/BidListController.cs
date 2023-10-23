@@ -16,9 +16,7 @@ namespace Dot.Net.WebApi.Controllers
             _bidListRepository = bidListRepository;
         }
 
-
-
-        [HttpGet("{id}")]
+        [HttpGet("liste des utilisateurs/{id}")]
         [Authorize(Roles = "Admin, RH, User")]
         public async Task<IActionResult> Get(int id)
         {
