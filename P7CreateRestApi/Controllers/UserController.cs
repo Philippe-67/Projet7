@@ -1,9 +1,10 @@
-
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using Microsoft.Extensions.Logging;
-
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace P7CreateRestApi.Controllers
 {
@@ -14,32 +15,19 @@ namespace P7CreateRestApi.Controllers
         private IUserRepository _userRepository;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepository)
         {
             _logger = logger;
-        }
-
-
-     
-
-        public UserController(IUserRepository userRepository)
-        {
             _userRepository = userRepository;
         }
-
-        //[HttpGet]
-        //[Route("list")]
-        //public async Task<IActionResult> Home()
-        //{
-        //    var users = await _userRepository.GetAllUsersAsync();
-        //    return Ok(users);
-        //}
 
         [HttpPost]
         [Route("add")]
         public async Task<IActionResult> AddUser([FromBody] User user)
         {
+            _logger.LogInformation($"Ajout de l'utilisateur : {user.Id}");
             await _userRepository.AddUserAsync(user);
+            _logger.LogInformation($"Utilisateur ajouté avec succès : {user.Id}");
             return Ok();
         }
 
@@ -47,33 +35,16 @@ namespace P7CreateRestApi.Controllers
         [Route("validate")]
         public async Task<IActionResult> Validate([FromBody] User user)
         {
+            _logger.LogInformation($"Validation de l'utilisateur : {user.Id}");
+
             if (!ModelState.IsValid)
             {
+                _logger.LogError("ModelState invalide");
                 return BadRequest();
             }
 
             await _userRepository.AddUserAsync(user);
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("update/{id}")]
-        public async Task<IActionResult> ShowUpdateForm(string id)
-        {
-            var user = await _userRepository.GetUserByIdAsync(id);
-            if (user == null)
-                return NotFound();
-
-            // Retournez votre vue ou effectuez d'autres opérations nécessaires
-            return Ok(user);
-        }
-
-        [HttpPost]
-        [Route("update/{id}")]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody] User user)
-        {
-            // TODO: check required fields, if valid call service to update User and return User list
-            await _userRepository.UpdateUserAsync(user);
+            _logger.LogInformation($"Utilisateur validé et ajouté avec succès : {user.Id}");
             return Ok();
         }
 
@@ -81,9 +52,11 @@ namespace P7CreateRestApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            _logger.LogInformation($"Deleting user with ID: {id}");
+            _logger.LogInformation($"Suppression de l'utilisateur avec l'ID : {id}");
 
             await _userRepository.DeleteUserAsync(id);
+            _logger.LogInformation($"Utilisateur supprimé avec succès : {id}");
+
             return Ok();
         }
 
@@ -91,7 +64,9 @@ namespace P7CreateRestApi.Controllers
         [Route("/secure/article-details")]
         public async Task<ActionResult<List<User>>> GetAllUserArticles()
         {
+            _logger.LogInformation("Récupération de tous les articles de l'utilisateur");
             var users = await _userRepository.GetAllUsersAsync();
+            _logger.LogInformation($"Récupéré  articles de l'utilisateur");
             return Ok(users);
         }
     }

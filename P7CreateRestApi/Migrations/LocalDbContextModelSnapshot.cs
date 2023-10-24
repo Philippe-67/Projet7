@@ -51,24 +51,24 @@ namespace P7CreateRestApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "337646a3-8b02-4ead-880a-55ca8d2bab37",
+                            Id = "ef11405c-a8ac-4aad-8938-0e2208eeaeb1",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "f3183a3e-dc81-480e-97ff-a993901a5355",
+                            Id = "e87540a1-5007-48d4-8ea2-dbdf7ca877f7",
                             ConcurrencyStamp = "2",
-                            Name = "Uder",
+                            Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "b14dc64f-5c89-43d7-8f19-d6b123b81caf",
+                            Id = "0603c911-dc6b-4576-a4a5-61d60f05be4d",
                             ConcurrencyStamp = "3",
-                            Name = "HR",
-                            NormalizedName = "HR"
+                            Name = "RH",
+                            NormalizedName = "RH"
                         });
                 });
 

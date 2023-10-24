@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace P7CreateRestApi.Controllers
 {
@@ -9,57 +11,73 @@ namespace P7CreateRestApi.Controllers
     [Route("[controller]")]
     public class RatingController : ControllerBase
     {
-
         private readonly IRatingRepository _ratingRepository;
-        public RatingController(IRatingRepository ratingRepository)
+        private readonly ILogger<RatingController> _logger;
+
+        public RatingController(ILogger<RatingController> logger, IRatingRepository ratingRepository)
         {
+            _logger = logger;
             _ratingRepository = ratingRepository;
         }
-       
 
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin, RH, User")]
-
         public async Task<IActionResult> Get(int id)
         {
+            _logger.LogInformation($"Récupération de la note avec l'ID : {id}");
+
             var rating = await _ratingRepository.GetByIdAsync(id);
             if (rating == null)
+            {
+                _logger.LogWarning($"Note avec l'ID {id} non trouvée");
                 return NotFound();
+            }
+
+            _logger.LogInformation($"Note avec l'ID {id} récupérée avec succès");
             return Ok(rating);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin, RH")]
-        //[Route("validate")]
         public async Task<IActionResult> Post([FromBody] Rating rating)
         {
-            {
-                // TODO: check data valid and save to db, after saving return Rating list
-                await _ratingRepository.AddAsync(rating);
-                return CreatedAtAction(nameof(Get), new { id = rating.Id }, rating);
-            }
+            _logger.LogInformation("Ajout d'une nouvelle note");
+
+            await _ratingRepository.AddAsync(rating);
+
+            _logger.LogInformation($"Note ajoutée avec succès. ID de la note : {rating.Id}");
+
+            return CreatedAtAction(nameof(Get), new { id = rating.Id }, rating);
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, RH")]
-        // [Route("update/{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Rating rating)
         {
-            if (id != rating.Id) // TODO: get Rating by Id and to model then show to the form
+            _logger.LogInformation($"Mise à jour de la note avec l'ID : {id}");
+
+            if (id != rating.Id)
+            {
+                _logger.LogError("Incompatibilité dans les ID de note. Requête incorrecte.");
                 return BadRequest();
+            }
+
             await _ratingRepository.UpdateAsync(rating);
+
+            _logger.LogInformation($"Note avec l'ID {id} mise à jour avec succès");
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin, RH")]
-        // [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            _logger.LogInformation($"Suppression de la note avec l'ID : {id}");
+
             await _ratingRepository.DeleteAsync(id);
+
+            _logger.LogInformation($"Note avec l'ID {id} supprimée avec succès");
             return NoContent();
         }
-
-
     }
 }
