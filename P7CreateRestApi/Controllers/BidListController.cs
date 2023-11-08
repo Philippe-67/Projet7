@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http; // Ajout de cet espace de noms pour accéder aux codes d'état HTTP
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BidListController : ControllerBase
     {
         private readonly IBidListRepository _bidListRepository;
@@ -21,8 +22,10 @@ namespace Dot.Net.WebApi.Controllers
             _bidListRepository = bidListRepository;
         }
 
-        [HttpGet("liste des utilisateurs/{id}")]
+        [HttpGet("{id}")]
         [Authorize(Roles = "Admin, RH, User")]
+        [ProducesResponseType(StatusCodes.Status200OK)] // OK
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // Not Found
         public async Task<IActionResult> Get(int id)
         {
             _logger.LogInformation($"Récupération de la liste d'offres avec l'ID : {id}");
@@ -40,6 +43,8 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, RH")]
+        [ProducesResponseType(StatusCodes.Status201Created)] // Created
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Bad Request
         public async Task<IActionResult> Post([FromBody] BidList bidList)
         {
             _logger.LogInformation("Ajout d'une nouvelle liste d'offres");
@@ -53,6 +58,8 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, RH")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // No Content
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Bad Request
         public async Task<IActionResult> Put(int id, [FromBody] BidList bidList)
         {
             _logger.LogInformation($"Mise à jour de la liste d'offres avec l'ID : {id}");
@@ -71,6 +78,8 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin, RH")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // No Content
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // Not Found
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation($"Tentative d'élimination à {DateTime.Now} de la liste d'offres avec l'ID {id}");

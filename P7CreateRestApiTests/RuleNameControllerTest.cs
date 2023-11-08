@@ -5,6 +5,7 @@ using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace P7CreateRestApiTests
 {
@@ -19,7 +20,9 @@ namespace P7CreateRestApiTests
             mockRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(new RuleName { Id = 1, /* other properties */ });
 
-            var controller = new RuleNameController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RuleNameController>>();
+
+            var controller = new RuleNameController(loggerMock.Object, mockRepository.Object);
 
             // Act
             var result = await controller.Get(1);
@@ -42,7 +45,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<IRuleNameRepository>();
-            var controller = new RuleNameController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RuleNameController>>();
+
+            var controller = new RuleNameController(loggerMock.Object, mockRepository.Object);
 
             var ruleNameToCreate = new RuleName { /* set properties */ };
 
@@ -65,7 +70,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<IRuleNameRepository>();
-            var controller = new RuleNameController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RuleNameController>>();
+
+            var controller = new RuleNameController(loggerMock.Object, mockRepository.Object);
 
             var existingRuleName = new RuleName { Id = 1, /* other properties */ };
             var ruleNameToUpdate = new RuleName { Id = 1, /* updated properties */ };
@@ -75,7 +82,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the UpdateAsync method was called with the correct parameters
                     Assert.AreEqual(ruleNameToUpdate.Id, updatedRuleName.Id);
-                    // Add more assertions based on your specific requirements
+                    
                 })
                 .Returns(Task.CompletedTask);
 
@@ -85,7 +92,7 @@ namespace P7CreateRestApiTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-            // Add more assertions based on your specific requirements
+           
         }
 
         [TestMethod]
@@ -93,7 +100,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<IRuleNameRepository>();
-            var controller = new RuleNameController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RuleNameController>>();
+
+            var controller = new RuleNameController(loggerMock.Object, mockRepository.Object);
 
             var ruleNameIdToDelete = 1;
 
@@ -102,7 +111,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the DeleteAsync method was called with the correct parameter
                     Assert.AreEqual(ruleNameIdToDelete, id);
-                    // Add more assertions based on your specific requirements
+                   
                 })
                 .Returns(Task.CompletedTask);
 
@@ -112,7 +121,7 @@ namespace P7CreateRestApiTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-            // Add more assertions based on your specific requirements
+            
         }
     }
 }

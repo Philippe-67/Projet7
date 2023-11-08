@@ -5,7 +5,7 @@ using P7CreateRestApi.Repositories;
 
 public class RatingRepository : IRatingRepository
 {
-    private readonly LocalDbContext _ratingContext;  // Renommez la propriété pour éviter le conflit avec une autre classe
+    private readonly LocalDbContext _ratingContext;  
 
     public RatingRepository(LocalDbContext ratingContext)
     {
@@ -25,6 +25,7 @@ public class RatingRepository : IRatingRepository
 
     public async Task AddAsync(Rating rating)
     {
+       // rating.Id = 0;/////////////////////////////////////////////////
         _ratingContext.Ratings.Add(rating);
         await _ratingContext.SaveChangesAsync();
     }

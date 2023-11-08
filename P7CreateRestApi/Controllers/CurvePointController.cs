@@ -2,13 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace P7CreateRestApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CurvePointController : ControllerBase
     {
         private readonly ICurvePointRepository _curvePointRepository;
@@ -22,6 +20,8 @@ namespace P7CreateRestApi.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin, RH, User")]
+        [ProducesResponseType(StatusCodes.Status200OK)] // OK
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // Not Found
         public async Task<IActionResult> Get(int id)
         {
             _logger.LogInformation($"Récupération du point de courbe avec l'ID : {id}");
@@ -39,6 +39,8 @@ namespace P7CreateRestApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, RH")]
+        [ProducesResponseType(StatusCodes.Status201Created)] // Created
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Bad Request
         public async Task<IActionResult> Post([FromBody] CurvePoint curvePoint)
         {
             _logger.LogInformation("Ajout d'un nouveau point de courbe");
@@ -52,6 +54,8 @@ namespace P7CreateRestApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, RH")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // No Content
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Bad Request
         public async Task<IActionResult> Put(int id, [FromBody] CurvePoint curvePoint)
         {
             _logger.LogInformation($"Mise à jour du point de courbe avec l'ID : {id}");
@@ -70,6 +74,8 @@ namespace P7CreateRestApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin, RH")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // No Content
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // Not Found
         public async Task<IActionResult> Delete(int id)
         {
             _logger.LogInformation($"Suppression du point de courbe avec l'ID : {id}");

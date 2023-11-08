@@ -5,6 +5,8 @@ using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+
 namespace P7CreateRestApiTests
 {
 
@@ -19,7 +21,9 @@ namespace P7CreateRestApiTests
             mockRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(new Rating { Id = 1, /* other properties */ });
 
-            var controller = new RatingController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RatingController>>();
+
+            var controller = new RatingController(loggerMock.Object, mockRepository.Object);
 
             // Act
             var result = await controller.Get(1);
@@ -34,7 +38,7 @@ namespace P7CreateRestApiTests
 
             var rating = okResult.Value as Rating;
             Assert.AreEqual(1, rating.Id);
-            // Add more assertions based on your specific requirements
+            
         }
 
         [TestMethod]
@@ -42,8 +46,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<IRatingRepository>();
-            var controller = new RatingController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RatingController>>();
 
+            var controller = new RatingController(loggerMock.Object, mockRepository.Object);
             var ratingToCreate = new Rating { /* set properties */ };
 
             // Act
@@ -57,7 +62,7 @@ namespace P7CreateRestApiTests
             Assert.AreEqual(nameof(controller.Get), createdAtActionResult.ActionName);
             Assert.IsNotNull(createdAtActionResult.RouteValues);
             Assert.AreEqual(ratingToCreate.Id, createdAtActionResult.RouteValues["id"]);
-            // Add more assertions based on your specific requirements
+           
         }
 
         [TestMethod]
@@ -65,7 +70,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<IRatingRepository>();
-            var controller = new RatingController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RatingController>>();
+
+            var controller = new RatingController(loggerMock.Object, mockRepository.Object);
 
             var existingRating = new Rating { Id = 1, /* other properties */ };
             var ratingToUpdate = new Rating { Id = 1, /* updated properties */ };
@@ -75,7 +82,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the UpdateAsync method was called with the correct parameters
                     Assert.AreEqual(ratingToUpdate.Id, updatedRating.Id);
-                    // Add more assertions based on your specific requirements
+                    
                 })
                 .Returns(Task.CompletedTask);
 
@@ -85,7 +92,7 @@ namespace P7CreateRestApiTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-            // Add more assertions based on your specific requirements
+           
         }
 
         [TestMethod]
@@ -93,7 +100,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<IRatingRepository>();
-            var controller = new RatingController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<RatingController>>();
+
+            var controller = new RatingController(loggerMock.Object, mockRepository.Object);
 
             var ratingIdToDelete = 1;
 
@@ -102,7 +111,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the DeleteAsync method was called with the correct parameter
                     Assert.AreEqual(ratingIdToDelete, id);
-                    // Add more assertions based on your specific requirements
+                    
                 })
                 .Returns(Task.CompletedTask);
 

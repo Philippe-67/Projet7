@@ -1,5 +1,6 @@
 using Dot.Net.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using P7CreateRestApi.Domain;
@@ -18,7 +19,9 @@ namespace P7CreateRestApiTests
             bidListRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                                  .ReturnsAsync(new BidList { BidListId = 1 });
 
-            var controller = new BidListController(bidListRepositoryMock.Object);
+            var loggerMock = new Mock<ILogger<BidListController>>();
+
+            var controller = new BidListController(loggerMock.Object, bidListRepositoryMock.Object);
 
             // Act
             var result = await controller.Get(1);
@@ -32,8 +35,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var bidListRepositoryMock = new Mock<IBidListRepository>();
-            var controller = new BidListController(bidListRepositoryMock.Object);
+            var loggerMock = new Mock<ILogger<BidListController>>();
 
+            var controller = new BidListController(loggerMock.Object, bidListRepositoryMock.Object);
             // Act
             var result = await controller.Post(new BidList());
 
@@ -46,7 +50,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var bidListRepositoryMock = new Mock<IBidListRepository>();
-            var controller = new BidListController(bidListRepositoryMock.Object);
+            var loggerMock = new Mock<ILogger<BidListController>>();
+
+            var controller = new BidListController(loggerMock.Object, bidListRepositoryMock.Object);
 
             // Act
             var result = await controller.Put(1, new BidList { BidListId = 1 });
@@ -60,7 +66,9 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var bidListRepositoryMock = new Mock<IBidListRepository>();
-            var controller = new BidListController(bidListRepositoryMock.Object);
+            var loggerMock = new Mock<ILogger<BidListController>>();
+
+            var controller = new BidListController(loggerMock.Object, bidListRepositoryMock.Object);
 
             // Act
             var result = await controller.Delete(1);

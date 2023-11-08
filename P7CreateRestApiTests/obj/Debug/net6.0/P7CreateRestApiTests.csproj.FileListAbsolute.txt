@@ -1,9 +1,4 @@
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\CoverletSourceRootsMapping
-C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.csproj.AssemblyReference.cache
-C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.AssemblyInfoInputs.cache
-C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.AssemblyInfo.cs
-C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.csproj.CoreCompileInputs.cache
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\testhost.dll
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\P7CreateRestApi.deps.json
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\P7CreateRestApi.runtimeconfig.json
@@ -177,6 +172,11 @@ C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\P7CreateRestApi.dll
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\P7CreateRestApi.pdb
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\bin\Debug\net6.0\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.csproj.AssemblyReference.cache
+C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.AssemblyInfoInputs.cache
+C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.AssemblyInfo.cs
+C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.csproj.CoreCompileInputs.cache
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.csproj.CopyComplete
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\P7CreateRestApiTests.dll
 C:\Users\A114SR\Source\Reposdu02-10-2023\projet7\P7CreateRestApiTests\obj\Debug\net6.0\refint\P7CreateRestApiTests.dll

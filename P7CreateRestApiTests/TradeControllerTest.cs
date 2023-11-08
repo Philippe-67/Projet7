@@ -4,6 +4,7 @@ using P7CreateRestApi.Controllers;
 using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace P7CreateRestApiTests
 {
@@ -19,7 +20,8 @@ namespace P7CreateRestApiTests
             mockRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(new Trade { TradeId = 1, /* other properties */ });
 
-            var controller = new TradeController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<TradeController>>();
+            var controller = new TradeController(loggerMock.Object, mockRepository.Object);
 
             // Act
             var result = await controller.Get(1);
@@ -34,7 +36,7 @@ namespace P7CreateRestApiTests
 
             var trade = okResult.Value as Trade;
             Assert.AreEqual(1, trade.TradeId);
-            // Add more assertions based on your specific requirements
+            
         }
 
         [TestMethod]
@@ -42,7 +44,8 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<ITradeRepository>();
-            var controller = new TradeController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<TradeController>>();
+            var controller = new TradeController(loggerMock.Object, mockRepository.Object);
 
             var tradeToCreate = new Trade { /* set properties */ };
 
@@ -57,7 +60,7 @@ namespace P7CreateRestApiTests
             Assert.AreEqual(nameof(controller.Get), createdAtActionResult.ActionName);
             Assert.IsNotNull(createdAtActionResult.RouteValues);
             Assert.AreEqual(tradeToCreate.TradeId, createdAtActionResult.RouteValues["id"]);
-            // Add more assertions based on your specific requirements
+            
         }
 
         [TestMethod]
@@ -65,7 +68,10 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<ITradeRepository>();
-            var controller = new TradeController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<TradeController>>();
+            var controller = new TradeController(loggerMock.Object, mockRepository.Object);
+          
+           
 
             var existingTrade = new Trade { TradeId = 1, /* other properties */ };
             var tradeToUpdate = new Trade { TradeId = 1, /* updated properties */ };
@@ -75,7 +81,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the UpdateAsync method was called with the correct parameters
                     Assert.AreEqual(tradeToUpdate.TradeId, updatedTrade.TradeId);
-                    // Add more assertions based on your specific requirements
+                    
                 })
                 .Returns(Task.CompletedTask);
 
@@ -85,7 +91,7 @@ namespace P7CreateRestApiTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-            // Add more assertions based on your specific requirements
+            
         }
 
         [TestMethod]
@@ -93,7 +99,8 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<ITradeRepository>();
-            var controller = new TradeController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<TradeController>>();
+            var controller = new TradeController(loggerMock.Object, mockRepository.Object);
 
             var tradeIdToDelete = 1;
 
@@ -102,7 +109,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the DeleteAsync method was called with the correct parameter
                     Assert.AreEqual(tradeIdToDelete, id);
-                    // Add more assertions based on your specific requirements
+                    
                 })
                 .Returns(Task.CompletedTask);
 
@@ -112,7 +119,7 @@ namespace P7CreateRestApiTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-            // Add more assertions based on your specific requirements
+            
         }
     }
 }

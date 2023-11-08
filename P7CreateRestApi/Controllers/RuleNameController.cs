@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http; // Ajout de cet espace de noms pour accéder aux codes d'état HTTP
 using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class RuleNameController : ControllerBase
 {
     private readonly IRuleNameRepository _ruleNameRepository;
@@ -20,6 +21,8 @@ public class RuleNameController : ControllerBase
 
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin, RH, User")]
+    [ProducesResponseType(StatusCodes.Status200OK)] // OK
+    [ProducesResponseType(StatusCodes.Status404NotFound)] // Not Found
     public async Task<IActionResult> Get(int id)
     {
         _logger.LogInformation($"Récupération du nom de règle avec l'ID : {id}");
@@ -37,6 +40,8 @@ public class RuleNameController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin, RH")]
+    [ProducesResponseType(StatusCodes.Status201Created)] // Created
+    [ProducesResponseType(StatusCodes.Status400BadRequest)] // Bad Request
     public async Task<IActionResult> Post([FromBody] RuleName ruleName)
     {
         _logger.LogInformation("Ajout d'un nouveau nom de règle");
@@ -49,6 +54,9 @@ public class RuleNameController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin, RH")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)] // No Content
+    [ProducesResponseType(StatusCodes.Status400BadRequest)] // Bad Request
     public async Task<IActionResult> Put(int id, [FromBody] RuleName ruleName)
     {
         _logger.LogInformation($"Mise à jour du nom de règle avec l'ID : {id}");
@@ -67,6 +75,8 @@ public class RuleNameController : ControllerBase
 
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin, RH")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)] // No Content
+    [ProducesResponseType(StatusCodes.Status404NotFound)] // Not Found
     public async Task<IActionResult> Delete(int id)
     {
         _logger.LogInformation($"Suppression du nom de règle avec l'ID : {id}");

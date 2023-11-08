@@ -5,6 +5,7 @@ using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace P7CreateRestApiTests
 {
@@ -17,10 +18,10 @@ namespace P7CreateRestApiTests
             // Arrange
             var mockRepository = new Mock<ICurvePointRepository>();
             mockRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(new CurvePoint { Id = 1, /* other properties */ });
+                .ReturnsAsync(new CurvePoint { Id = 1 });
 
-            var controller = new CurvePointController(mockRepository.Object);
-
+            var loggerMock = new Mock<ILogger<CurvePointController>>();
+            var controller = new CurvePointController(loggerMock.Object, mockRepository.Object);
             // Act
             var result = await controller.Get(1);
 
@@ -34,7 +35,7 @@ namespace P7CreateRestApiTests
 
             var curvePoint = okResult.Value as CurvePoint;
             Assert.AreEqual(1, curvePoint.Id);
-            // Add more assertions based on your specific requirements
+            
         }
 
         [TestMethod]
@@ -42,7 +43,8 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<ICurvePointRepository>();
-            var controller = new CurvePointController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<CurvePointController>>();
+            var controller = new CurvePointController(loggerMock.Object, mockRepository.Object);
 
             var curvePointToCreate = new CurvePoint { /* set properties */ };
 
@@ -57,7 +59,7 @@ namespace P7CreateRestApiTests
             Assert.AreEqual(nameof(controller.Get), createdAtActionResult.ActionName);
             Assert.IsNotNull(createdAtActionResult.RouteValues);
             Assert.AreEqual(curvePointToCreate.Id, createdAtActionResult.RouteValues["id"]);
-            // Add more assertions based on your specific requirements
+            
         }
 
         [TestMethod]
@@ -65,7 +67,8 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<ICurvePointRepository>();
-            var controller = new CurvePointController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<CurvePointController>>();
+            var controller = new CurvePointController(loggerMock.Object, mockRepository.Object);
 
             var existingCurvePoint = new CurvePoint { Id = 1, /* other properties */ };
             var curvePointToUpdate = new CurvePoint { Id = 1, /* updated properties */ };
@@ -75,7 +78,7 @@ namespace P7CreateRestApiTests
                 {
                     // Verify that the UpdateAsync method was called with the correct parameters
                     Assert.AreEqual(curvePointToUpdate.Id, updatedCurvePoint.Id);
-                    // Add more assertions based on your specific requirements
+                   
                 })
                 .Returns(Task.CompletedTask);
 
@@ -85,7 +88,7 @@ namespace P7CreateRestApiTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
-            // Add more assertions based on your specific requirements
+         
         }
 
         [TestMethod]
@@ -93,7 +96,8 @@ namespace P7CreateRestApiTests
         {
             // Arrange
             var mockRepository = new Mock<ICurvePointRepository>();
-            var controller = new CurvePointController(mockRepository.Object);
+            var loggerMock = new Mock<ILogger<CurvePointController>>();
+            var controller = new CurvePointController(loggerMock.Object, mockRepository.Object);
 
             var curvePointIdToDelete = 1;
 

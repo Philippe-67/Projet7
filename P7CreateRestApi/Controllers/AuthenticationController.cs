@@ -4,15 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using P7CreateRestApi.Models;
 using P7CreateRestApi.Models.Authentication.Login;
 using P7CreateRestApi.Models.Authentication.SignUp;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace P7CreateRestApi.Controllers
 {
@@ -64,8 +58,18 @@ namespace P7CreateRestApi.Controllers
                 if (!result.Succeeded)
                 {
                     _logger.LogError("Échec de la création de l'utilisateur");
-                    return StatusCode(StatusCodes.Status500InternalServerError,
-                    new Response { Status = "Error", Message = "User failed to create!" });
+                    if (!result.Succeeded)
+                    {
+                        _logger.LogError("Échec de la création de l'utilisateur");
+
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                        {
+                            Status = result.Errors.FirstOrDefault()?.Code ?? "Error",
+                            Message = "User failed to create! du con ",
+                            Description = result.Errors.FirstOrDefault()?.Description
+                        });
+                    }
+
                 }
 
                 //add role to the user
