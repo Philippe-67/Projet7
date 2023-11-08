@@ -65,7 +65,7 @@ namespace P7CreateRestApi.Controllers
                         return StatusCode(StatusCodes.Status500InternalServerError, new Response
                         {
                             Status = result.Errors.FirstOrDefault()?.Code ?? "Error",
-                            Message = "User failed to create! du con ",
+                            Message = "User failed to create! ",
                             Description = result.Errors.FirstOrDefault()?.Description
                         });
                     }
