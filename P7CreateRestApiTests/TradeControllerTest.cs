@@ -18,7 +18,7 @@ namespace P7CreateRestApiTests
             // Arrange
             var mockRepository = new Mock<ITradeRepository>();
             mockRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(new Trade { TradeId = 1, /* other properties */ });
+                .ReturnsAsync(new Trade { TradeId = 1, });
 
             var loggerMock = new Mock<ILogger<TradeController>>();
             var controller = new TradeController(loggerMock.Object, mockRepository.Object);
@@ -73,8 +73,8 @@ namespace P7CreateRestApiTests
           
            
 
-            var existingTrade = new Trade { TradeId = 1, /* other properties */ };
-            var tradeToUpdate = new Trade { TradeId = 1, /* updated properties */ };
+            var existingTrade = new Trade { TradeId = 1,  };
+            var tradeToUpdate = new Trade { TradeId = 1,  };
 
             mockRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Trade>()))
                 .Callback<Trade>(updatedTrade =>

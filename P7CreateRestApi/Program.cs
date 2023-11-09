@@ -23,9 +23,19 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddDbContext<LocalDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 // Configuration pour Identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    // Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+}
+)
     .AddEntityFrameworkStores<LocalDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Configuration pour l'authentification
 builder.Services.AddAuthentication(options =>

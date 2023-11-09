@@ -25,7 +25,7 @@ public class RatingRepository : IRatingRepository
 
     public async Task AddAsync(Rating rating)
     {
-       // rating.Id = 0;/////////////////////////////////////////////////
+      
         _ratingContext.Ratings.Add(rating);
         await _ratingContext.SaveChangesAsync();
     }
